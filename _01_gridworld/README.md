@@ -9,3 +9,9 @@ Reward는 A, B지점에서 각각 10,5점을 받음
    
 이때 5X5 "State Value Table"을 오른쪽 그림과 같이 만들어 내는것이 문제   
 
+
+**Render**
+
+```bash
+python main.py --render False --gamma 0.9 --eps 0.05 --alpha 0.9
+```

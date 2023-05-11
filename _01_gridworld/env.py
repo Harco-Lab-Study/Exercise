@@ -8,8 +8,12 @@ class gridworld:
         self.current_location = (4,np.random.randint(0,5))
         # self.current_location = (2,2)
         
-        self.grid[0,1] = 10
-        self.grid[0,3] = 2
+        self.reward_position_1 = (0,1)
+        self.reward_position_2 = (0,3)
+        
+        # State Value 의 경우, 아래와같은 작업이 필요함! (Reward랑은 다른개념인데 한번 생각해보기)
+        self.grid[self.reward_position_1] = 100
+        self.grid[self.reward_position_2] = 50
         
         self.actions = np.array(['UP', 'DOWN', 'LEFT', 'RIGHT'])
         
@@ -18,16 +22,20 @@ class gridworld:
         self.grid = np.zeros(( self.height, self.width))
         self.grid[ self.current_location[0], self.current_location[1]] = 1
         
-        self.grid[0,1] = 10
-        self.grid[0,3] = 5
+        
+
         return self.grid
         
         
     def get_reward(self , location):
-        # print('location : ',location)
-        # print('reward : ',self.grid[location[0],location[1]])
-        return self.grid[location[0],location[1]]
+        if location == self.reward_position_1:
+            return 10
+        elif location == self.reward_position_2:
+            return 5
+        else:
+            return 0
     
+        
     def make_step(self,action):
         reward=0
         before_location = self.current_location
@@ -76,6 +84,6 @@ class gridworld:
                 elif self.current_location == (0,3):
                     self.current_location = (3,3)
 
-        # print(action)
+        print(action)
         return reward,action
     

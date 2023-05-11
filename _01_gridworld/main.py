@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 from env import gridworld
 from agent import StateValue_Agent
 import numpy as np
+import argparse
 
-
-def play(environment , agent, trials = 10000, learn = False,ax=None):
+def play(environment , agent, trials = 10000, learn = False,ax=None,alpha=0.9):
     reward_list = []
     reward = 0
     for trial in range(trials):
@@ -16,14 +16,7 @@ def play(environment , agent, trials = 10000, learn = False,ax=None):
         new_state = environment.current_location
         
         grid_state_agent = environment.agent_on_map()
-        
-        # print('old_state : ',old_state)
-        # print('Choosed Action : ',action)
-        # print('그에대한 reward : ',reward)
-        # print('new_state s` : ',new_state)
-        # print(grid_state_agent)
-        # print(agent.value_table)
-        # print('----------')
+
         
         if ax is not None:
             ax[0].imshow(grid_state_agent, cmap='viridis', aspect='auto')
@@ -38,24 +31,47 @@ def play(environment , agent, trials = 10000, learn = False,ax=None):
                      ax[1].text(j, i, round(agent.value_table[i, j], 1),
                                ha="center", va="center", color="white", fontsize=8)
             
-            plt.pause(0.0001)
+            plt.pause(0.1)
         
         if learn == True:
-            agent.learning(old_state,new_state,reward)
+            print('Agent Location:',environment.current_location)
+            print('Reward:',reward)
+            agent.learning(old_state,new_state,reward,alpha=alpha)
             
             
             
             
 
-
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
 
 if __name__ == "__main__":
+    
+    
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument('--render', default=True, help='render the environment',type=str2bool)
+    argparser.add_argument('--gamma', default=0.9, help='gamma value',type=float)
+    argparser.add_argument('--eps', default=0.05, help='epsilon value',type=float)
+    argparser.add_argument('--alpha', default=0.9, help='alpha value',type=float)
+    
+    args = argparser.parse_args()
+    render = args.render
+    gamma = args.gamma
+    eps = args.eps
+    alpha = args.alpha
+    
     environment = gridworld()
-    agent = StateValue_Agent(environment,epsilon=0.05,gamma=0.9)
-
-    render=True
+    agent = StateValue_Agent(environment,epsilon=eps,gamma=gamma)
+    
     
     
     if render:
@@ -65,7 +81,7 @@ if __name__ == "__main__":
     
     for i in range(50):
         environment.current_location = (4,np.random.randint(0,5))
-        play(environment,agent,trials=10000,learn=True,ax=ax)
+        play(environment,agent,trials=10000,learn=True,ax=ax,alpha=alpha)
         print('ep : ',i,end='\r')
         
     print(np.round(agent.value_table,1))
