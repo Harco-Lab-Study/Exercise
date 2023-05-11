@@ -24,8 +24,10 @@ class StateValue_Agent():
                 action_list.append(action)
                 reward_list.append(reward)
                 reward = max(reward_list)
+                
                 # one Step Ahead Search중, max값을 가지는 action을 선택
-                # 2개의 max값인경우, 최대값중 랜덤하게 선택 (은근히 구현할때 조심해야하는 부분. np.arg max를 쓰면 무조건 맨앞 인덱스를 반환하기 때문에..)
+                # 2개의 max값인경우, 최대값중 랜덤하게 선택 (은근히 구현할때 조심해야하는 부분. np.arg max를 쓰면 2개이상일때
+                # 무조건 맨앞 인덱스를 반환하기 때문에..)
                 max_idx = np.where(np.array(reward_list) == reward)[0]
                 if len(max_idx) > 1:
                     action = action_list[np.random.choice(max_idx)]
