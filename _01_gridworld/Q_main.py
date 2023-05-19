@@ -53,7 +53,7 @@ def play(environment , agent , trials = 5000 , learn = False , alpha=0.1, ax=Non
         if ax is not None:
             print(action)
             grid= (2,4)
-            plt.subplot2grid(grid, (0, 0), colspan=3, rowspan=2)
+            plt.subplot2grid(grid, (0, 0), colspan=2, rowspan=2)
             plt.title('Grid State Agent')
             plt.imshow(grid_agent_position, cmap='viridis', aspect='auto')
             plt.grid()
@@ -168,9 +168,5 @@ if __name__ == "__main__":
     Q_LEFT = np.array(q_left).reshape(5,5)
     Q_RIGHT = np.array(q_right).reshape(5,5)
     plot_q(Q_UP,Q_DOWN,Q_LEFT,Q_RIGHT,idx=0)
-        
-        
-        
-
 
     plt.show()
