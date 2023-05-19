@@ -53,6 +53,10 @@ class gridworld:
                     self.current_location = (4,1)
                 elif self.current_location == (0,3):
                     self.current_location = (3,3)
+            
+            # 벽에 부딪히면 -50점
+            elif self.current_location[0]==0:
+                reward=-50
 
             
         elif action == 'DOWN':
@@ -63,6 +67,10 @@ class gridworld:
                     self.current_location = (4,1)
                 elif self.current_location == (0,3):
                     self.current_location = (3,3)
+            
+            # 벽에 부딪히면 -50점
+            elif self.current_location[0]==4:
+                reward=-50
 
             
         elif action == 'LEFT':
@@ -73,6 +81,10 @@ class gridworld:
                     self.current_location = (4,1)
                 elif self.current_location == (0,3):
                     self.current_location = (3,3)
+                    
+            # 벽에 부딪히면 -50점
+            elif self.current_location[1]==0:
+                reward=-50
 
             
         elif action == 'RIGHT':
@@ -83,7 +95,11 @@ class gridworld:
                     self.current_location = (4,1)
                 elif self.current_location == (0,3):
                     self.current_location = (3,3)
+                    
+            # 벽에 부딪히면 -50점
+            elif self.current_location[1]==4:
+                reward=-50
 
-        print(action)
+        # print(action)
         return reward,action
     
