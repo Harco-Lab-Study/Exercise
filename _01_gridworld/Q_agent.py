@@ -54,14 +54,13 @@ class Q_Agent():
         
         # Q Learning Update
         # Q(s,a) = (1-alpha)*Q(s,a) + alpha*(reward + gamma*max(Q(s',a')))
+        
+        """
+        2023 05 19 문제
+        Q 값 Update식 : Q(s,a) = Q(s,a) + alpha * ( reward + gamma*max( Q(s',a') ) - Q(s,a) ) => 벨만 최적방정식 으로 적혀있는데
+        V와 Q에 대한 벨만 기대방정식으로 바꿔보기
+        """
         self.q_table[state][action] = (1-self.epsilon)*self.q_table[state][action] + self.epsilon*(reward + self.gamma*np.max(list(self.q_table[next_state].values())))
         
         return self.q_table[state][action]
-
-
-
     
-
-
-
-
