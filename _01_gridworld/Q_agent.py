@@ -60,7 +60,22 @@ class Q_Agent():
         Q 값 Update식 : Q(s,a) = Q(s,a) + alpha * ( reward + gamma*max( Q(s',a') ) - Q(s,a) ) => 벨만 최적방정식 으로 적혀있는데
         V와 Q에 대한 벨만 기대방정식으로 바꿔보기
         """
-        self.q_table[state][action] = (1-self.epsilon)*self.q_table[state][action] + self.epsilon*(reward + self.gamma*np.max(list(self.q_table[next_state].values())))
+        # self.q_table[state][action] = (1-self.epsilon)*self.q_table[state][action] + self.epsilon*(reward + self.gamma*np.max(list(self.q_table[next_state].values())))
+        """
+        Q Bellman Expectation Euqation
+        Q(s,a) = Q(s,a) + alpha * ( reward + gamma*sum( pi(a'|s')*Q(s',a') ) - Q(s,a) )
+        """
+        self.q_table[state][action] = self.q_table[state][action] + self.alpha*(reward + self.gamma*np.mean(list(self.q_table[next_state].values())) - self.q_table[state][action])
+        
+        
+        """
+        Q Bellman Optimality Euqation
+        Q(s,a) = Q(s,a) + alpha * ( reward + gamma*max( Q(s',a') ) - Q(s,a) )
+        """
+        # self.q_table[state][action] = self.q_table[state][action] + self.alpha*(reward + self.gamma*np.max(list(self.q_table[next_state].values())) - self.q_table[state][action])
+        
+        
+        
         
         return self.q_table[state][action]
     
