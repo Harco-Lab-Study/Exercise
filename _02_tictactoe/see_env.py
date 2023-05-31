@@ -24,7 +24,7 @@ def available_actions(board):
 while not done:
     actions = available_actions(env.board)
     action = random.choice(actions)
-
+    print('current player : ', env.current_player)
     _, reward, done, _ = env.step(action)
     if rendering == True:
         env.render(ax=ax)
