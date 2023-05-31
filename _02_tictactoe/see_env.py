@@ -14,14 +14,17 @@ done = False
 
 
 while not done:
-
-    
+    # Get Available Action    
     available_actions = np.where(env.board == 0)
     _i,_j = available_actions[0],available_actions[1]
     actions = [i*3+j for i,j in zip(_i,_j)]
+    
+    # Random Action Choosing
     action = random.choice(actions)
     print('current player : ', env.current_player)
     print(env.board)
+    
+    # Step
     _, reward, done, _ = env.step(action)
     if rendering == True:
         env.render(ax=ax)
