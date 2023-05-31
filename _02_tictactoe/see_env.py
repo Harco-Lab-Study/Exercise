@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from env import TicTacToeEnv
 import random
+import numpy as np
 
 
 env = TicTacToeEnv()
@@ -11,20 +12,16 @@ rendering=True
 
 done = False
 
-def available_actions(board):
-    actions = []
-    for i in range(9):
-        row, col = i // 3, i % 3
-        if board[row, col] == 0:
-            actions.append(i)
-    return actions
-
-
 
 while not done:
-    actions = available_actions(env.board)
+
+    
+    available_actions = np.where(env.board == 0)
+    _i,_j = available_actions[0],available_actions[1]
+    actions = [i*3+j for i,j in zip(_i,_j)]
     action = random.choice(actions)
     print('current player : ', env.current_player)
+    print(env.board)
     _, reward, done, _ = env.step(action)
     if rendering == True:
         env.render(ax=ax)
